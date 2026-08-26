@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Erbil Car Show | Registration</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+}
+
+body{
+margin:0;
+font-family:Arial,Tahoma,sans-serif;
+background:linear-gradient(135deg,#050505,#181818,#050505);
+color:#fff;
+min-height:100vh;
+}
+
+.wrap{
+width:min(760px,92%);
+margin:auto;
+}
+
+.hero{
+text-align:center;
+padding:65px 0 25px;
+}
+
+.hero h1{
+font-size:clamp(38px,9vw,75px);
+margin:0;
+line-height:.95;
+}
+
+.hero p{
+color:#aaa;
+line-height:1.8;
+}
+
+.card{
+background:#111;
+border:1px solid #292929;
+border-radius:25px;
+padding:28px;
+margin:20px 0 60px;
+box-shadow:0 25px 70px #0008;
+}
+
+h2{
+margin-top:0;
+}
+
+.field{
+margin:20px 0;
+}
+
+label{
+display:block;
+margin-bottom:9px;
+font-weight:bold;
+}
+
+input{
+width:100%;
+padding:15px;
+border-radius:14px;
+border:1px solid #333;
+background:#090909;
+color:white;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:16px;
+border:0;
+border-radius:14px;
+background:#fff;
+color:#000;
+font-weight:900;
+font-size:16px;
+cursor:pointer;
+}
+
+button:disabled{
+opacity:.6;
+}
+
+.preview{
+display:none;
+margin-top:12px;
+}
+
+.preview img{
+width:100%;
+max-height:320px;
+object-fit:cover;
+border-radius:14px;
+}
+
+.msg{
+display:none;
+margin-top:15px;
+padding:13px;
+border-radius:12px;
+text-align:center;
+}
+
+.ok{
+background:#16351f;
+color:#baffc9;
+}
+
+.err{
+background:#3a1717;
+color:#ffcaca;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<section class="hero">
+
+<h1>
+ERBIL
+<br>
+CAR SHOW
+</h1>
+
+<p>
+فۆرمی ناونوسینی ئۆتۆمبێل
+</p>
+
+</section>
+
+
+<section class="card">
+
+<h2>
+ناونوسین
+</h2>
+
+<form id="f">
+
+<div class="field">
+
+<label>
+ناوی سیانی
+</label>
+
+<input
+id="name"
+required
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+ژمارەی مۆبایل
+</label>
+
+<input
+id="phone"
+type="tel"
+required
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+ناونیشان
+</label>
+
+<input
+id="address"
+required
+>
+
+</div>
+
+
+<div class="field">
+
+<label>
+وێنەی ئۆتۆمبێلەکە
+</label>
+
+<input
+id="img"
+type="file"
+accept="image/*"
+required
+>
+
+<div
+class="preview"
+id="pv"
+>
+
+<img
+id="pi"
+>
+
+</div>
+
+</div>
+
+
+<button
+id="btn"
+>
+
+ناردنی ناونوسین
+
+</button>
+
+
+<div
+class="msg ok"
+id="ok"
+>
+
+ناونوسینەکەت بە سەرکەوتوویی نێردرا ✓
+
+</div>
+
+
+<div
+class="msg err"
+id="err"
+>
+
+ناردن سەرکەوتوو نەبوو. دووبارە هەوڵ بدەوە.
+
+</div>
+
+</form>
+
+</section>
+
+</div>
+
+
+<script>
+
+const WEB_APP_URL =
+"https://script.google.com/macros/s/AKfycbyZ57HpIBkiUIqZye4crQDAeTMwWaSr2Nf47QWz0Iuemaq5cUtTAKyPPFUAyqQdSBQR2w/exec";
+
+
+const f =
+document.getElementById("f");
+
+const img =
+document.getElementById("img");
+
+const pv =
+document.getElementById("pv");
+
+const pi =
+document.getElementById("pi");
+
+const btn =
+document.getElementById("btn");
+
+const ok =
+document.getElementById("ok");
+
+const err =
+document.getElementById("err");
+
+
+img.onchange = () => {
+
+if(img.files[0]){
+
+pi.src =
+URL.createObjectURL(img.files[0]);
+
+pv.style.display =
+"block";
+
+}
+
+};
+
+
+function dataURL(file){
+
+return new Promise(
+(resolve,reject)=>{
+
+let reader =
+new FileReader();
+
+reader.onload =
+()=>resolve(reader.result);
+
+reader.onerror =
+reject;
+
+reader.readAsDataURL(file);
+
+});
+
+}
+
+
+f.onsubmit =
+async e => {
+
+e.preventDefault();
+
+ok.style.display =
+"none";
+
+err.style.display =
+"none";
+
+btn.disabled =
+true;
+
+btn.textContent =
+"ناردن...";
+
+
+try{
+
+const file =
+img.files[0];
+
+
+const payload = {
+
+name:
+document.getElementById("name").value.trim(),
+
+phone:
+document.getElementById("phone").value.trim(),
+
+address:
+document.getElementById("address").value.trim(),
+
+imageData:
+await dataURL(file),
+
+imageName:
+file.name || "car.jpg",
+
+imageType:
+file.type || "image/jpeg"
+
+};
+
+
+const response =
+await fetch(
+
+WEB_APP_URL,
+
+{
+
+method:
+"POST",
+
+headers:{
+"Content-Type":
+"text/plain;charset=utf-8"
+},
+
+body:
+JSON.stringify(payload)
+
+}
+
+);
+
+
+const data =
+await response.json();
+
+
+if(!data.ok){
+
+throw Error(
+data.error || "error"
+);
+
+}
+
+
+ok.style.display =
+"block";
+
+f.reset();
+
+pv.style.display =
+"none";
+
+
+}catch(error){
+
+console.error(error);
+
+err.style.display =
+"block";
+
+}
+finally{
+
+btn.disabled =
+false;
+
+btn.textContent =
+"ناردنی ناونوسین";
+
+}
+
+};
+
+</script>
+
+</body>
+</html>
