@@ -413,6 +413,9 @@ WEB_APP_URL,
 method:
 "POST",
 
+mode:
+"no-cors",
+
 headers:{
 "Content-Type":
 "text/plain;charset=utf-8"
@@ -424,19 +427,6 @@ JSON.stringify(payload)
 }
 
 );
-
-
-const data =
-await response.json();
-
-
-if(!data.ok){
-
-throw Error(
-data.error || "error"
-);
-
-}
 
 
 ok.style.display =
