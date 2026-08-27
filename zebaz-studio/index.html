@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZEBAZ Studio | Car Advertising Booking</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#070707;color:#fff;min-height:100vh}.wrap{width:min(760px,92%);margin:auto}.hero{text-align:center;padding:58px 0 24px}.brand{font-size:clamp(42px,10vw,78px);font-weight:900;letter-spacing:5px;margin:0}.sub{color:#b6b6b6;font-size:17px;line-height:1.9;margin:14px auto 0;max-width:620px}.tag{display:inline-block;margin-top:15px;padding:9px 16px;border:1px solid #2f2f2f;border-radius:999px;color:#ddd}.card{background:#111;border:1px solid #292929;border-radius:24px;padding:26px;margin:15px 0 28px;box-shadow:0 20px 60px rgba(0,0,0,.45)}h2{margin:0 0 8px;font-size:26px}.note{color:#999;line-height:1.8;margin:0 0 22px}.field{margin:17px 0}label{display:block;margin-bottom:8px;font-weight:700}input,select,textarea{width:100%;padding:14px 15px;border-radius:13px;border:1px solid #333;background:#090909;color:#fff;font-size:16px;outline:none}textarea{min-height:105px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:#777}.btn{width:100%;padding:16px;border:0;border-radius:13px;background:#fff;color:#000;font-size:17px;font-weight:900;cursor:pointer;margin-top:8px}.btn:active{transform:scale(.99)}.footer{text-align:center;color:#8f8f8f;padding:5px 10px 45px;line-height:1.9}.footer strong{display:block;color:#fff;letter-spacing:2px;font-size:20px}.mini{font-size:13px;color:#777;margin-top:12px}.success{display:none;margin-top:14px;padding:13px;border-radius:12px;background:#17351f;color:#c8ffd2;text-align:center}@media(max-width:520px){.card{padding:20px}.hero{padding-top:42px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section class="hero">
+<h1 class="brand">ZEBAZ</h1>
+<p class="sub">بۆ حجزکردنی خزمەتگوزارییەکانی ریکلام و دیزاینی ئۆتۆمبێل، زانیارییەکانت پڕ بکەرەوە و داواکارییەکەت بنێرە.</p>
+<div class="tag">ZEBAZ Studio • Erbil</div>
+</section>
+<section class="card">
+<h2>فۆرمی حجز</h2>
+<p class="note">دوای پڕکردنەوەی فۆرمەکە، داواکارییەکەت ڕاستەوخۆ لە WhatsApp بۆ ZEBAZ Studio ئامادە دەبێت.</p>
+<form id="bookingForm">
+<div class="field"><label for="name">ناوی سیانی</label><input id="name" required placeholder="ناوی خۆت بنووسە"></div>
+<div class="field"><label for="phone">ژمارەی مۆبایل</label><input id="phone" type="tel" required placeholder="0750 000 0000"></div>
+<div class="field"><label for="car">جۆر و مۆدێلی ئۆتۆمبێل</label><input id="car" required placeholder="نموونە: Ford Bronco"></div>
+<div class="field"><label for="year">ساڵی مۆدێل</label><input id="year" inputmode="numeric" required placeholder="2025"></div>
+<div class="field"><label for="service">خزمەتگوزاری</label><select id="service" required><option value="">هەڵبژێرە</option><option>ریکلامی ئۆتۆمبێل</option><option>Wrap / Color Change</option><option>PPF</option><option>Window Tint</option><option>Branding / Logo</option><option>خزمەتگوزارییەکی تر</option></select></div>
+<div class="field"><label for="date">بەرواری پێشنیارکراو</label><input id="date" type="date"></div>
+<div class="field"><label for="details">تێبینی زیاتر</label><textarea id="details" placeholder="هەر داواکارییەکی تایبەتت هەیە لێرە بنووسە"></textarea></div>
+<button class="btn" type="submit">ناردنی داواکاری لە WhatsApp</button>
+<div id="success" class="success">داواکارییەکەت ئامادە کرا ✓</div>
+<p class="mini">بە کلیککردن لە دوگمەکە WhatsApp دەکرێتەوە و تۆ دەتوانیت نامەکە بنێریت.</p>
+</form>
+</section>
+<footer class="footer"><strong>ZEBAZ STUDIO</strong><div>Car Advertising • Wrap • PPF • Branding</div><div>Erbil, Kurdistan</div></footer>
+</div>
+<script>
+const form=document.getElementById('bookingForm');
+form.addEventListener('submit',function(e){
+ e.preventDefault();
+ const name=document.getElementById('name').value.trim();
+ const phone=document.getElementById('phone').value.trim();
+ const car=document.getElementById('car').value.trim();
+ const year=document.getElementById('year').value.trim();
+ const service=document.getElementById('service').value;
+ const date=document.getElementById('date').value || 'دیاری نەکراوە';
+ const details=document.getElementById('details').value.trim() || 'نییە';
+ const message=`سڵاو ZEBAZ Studio، دەمەوێت حجز بکەم.\n\nناو: ${name}\nژمارەی مۆبایل: ${phone}\nئۆتۆمبێل: ${car}\nساڵ: ${year}\nخزمەتگوزاری: ${service}\nبەرواری پێشنیارکراو: ${date}\nتێبینی: ${details}`;
+ document.getElementById('success').style.display='block';
+ const wa=`https://wa.me/9647502122220?text=${encodeURIComponent(message)}`;
+ window.location.href=wa;
+});
+</script>
+</body>
+</html>
